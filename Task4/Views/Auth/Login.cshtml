@@ -1,0 +1,40 @@
+﻿@model LoginDto
+
+<form method="post">
+    <div class="card  col-md-8 mx-auto mt-4">
+        <div class="card-header  bg-success bg-gradient text-center">
+            <h2 class="text-white">Login</h2>
+        </div>
+        <div class="card-body">
+            <div class="p-4">
+                <div asp-validation-summary="ModelOnly" class="text-danger col-md-8 mx-auto"></div>
+                @if (TempData["Block"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show col" role="alert" >
+                        @TempData["Block"]
+                    </div>
+                }
+            <div class="form-floating my-2 col-md-8 offset-md-2">
+                <input asp-for="Email" class="form-control border shadow" placeholder="" />
+                <label asp-for="Email" class="ms-1"></label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating my-2 col-md-8 mx-auto">
+                <input asp-for="Password" class="form-control border shadow" placeholder="" />
+                <label asp-for="Password" class="ms-1"></label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="py-2 col-md-8 mx-auto form-check ">
+                <input asp-for="IsRemember" class="form-check-input" />
+                <label asp-for="IsRemember" class="form-check-label"></label>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-3 mx-auto">
+                    <input type="submit" value="Log in" class="btn btn-primary w-100" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</form>

@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html data-bs-theme="dark">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <style>
+        /* Изменение цвета выпадающего списка */
+        .dataTables_length label select {
+            background-color: #343a40 !important; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-action="Index" asp-controller="User"  >Users</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-action="Logout" asp-controller="Auth">LogOut</a>
+                            </li>                            
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-action="Registration" asp-controller="Auth">Registration</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-action="Login" asp-controller="Auth">Login</a>
+                            </li>
+                        }
+                        
+                    </ul>
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Hello @User.Identity.Name</a>
+                        </li>                
+                    </ul>
+                }
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded",()=>{
+            let successMsg=`@TempData["Success"]`;
+            let errorMsg=`@TempData["Error"]`;
+             toastr.options = { "closeButton": true, "progressBar": true };
+            if(successMsg){
+              toastr.success(successMsg);
+            }
+            if(errorMsg){
+                toastr.error(errorMsg);
+            }
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", false)
+</body>
+</html>
